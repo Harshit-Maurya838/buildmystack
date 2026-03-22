@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar';
+import { Toaster } from 'react-hot-toast';
 
 export const metadata = {
   title: 'NextJS + Mongo App',
@@ -10,6 +11,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body style={{ fontFamily: 'system-ui, sans-serif', margin: 0, padding: 0 }}>
         <Navbar />
+        <Toaster position="bottom-right" />
         <main style={{ padding: '20px' }}>
           {children}
         </main>
