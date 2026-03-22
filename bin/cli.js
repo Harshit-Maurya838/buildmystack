@@ -45,7 +45,7 @@ program
         type: "list",
         name: "stack",
         message: "Select your stack:",
-        choices: ["react-express-mongo"],
+        choices: ["react-express-mongo", "nextjs-mongo"],
       });
 
       const answers = await inquirer.prompt(prompts);
@@ -87,8 +87,13 @@ program
       await fs.writeJson(rootPackageJsonPath, rootPackageJson, { spaces: 2 });
 
       // Rename .env.example to .env
-      const envExamplePath = path.join(targetPath, "server", ".env.example");
-      const envPath = path.join(targetPath, "server", ".env");
+      let envExamplePath = path.join(targetPath, "server", ".env.example");
+      let envPath = path.join(targetPath, "server", ".env");
+      if (!fs.existsSync(envExamplePath)) {
+        envExamplePath = path.join(targetPath, ".env.example");
+        envPath = path.join(targetPath, ".env");
+      }
+      
       if (fs.existsSync(envExamplePath)) {
         await fs.move(envExamplePath, envPath);
       }
@@ -97,21 +102,27 @@ program
         console.log(`Installing root dependencies using ${pkgManager}...`);
         await execa(pkgManager, ["install"], { cwd: targetPath, stdio: "inherit" });
 
-        console.log(`\nInstalling server dependencies using ${pkgManager}...`);
-        await execa(pkgManager, ["install"], {
-          cwd: path.join(targetPath, "server"),
-          stdio: "inherit",
-        });
+        const serverPath = path.join(targetPath, "server");
+        if (fs.existsSync(serverPath)) {
+          console.log(`\nInstalling server dependencies using ${pkgManager}...`);
+          await execa(pkgManager, ["install"], {
+            cwd: serverPath,
+            stdio: "inherit",
+          });
+        }
 
-        console.log(`\nInstalling client dependencies using ${pkgManager}...`);
-        await execa(pkgManager, ["install"], {
-          cwd: path.join(targetPath, "client"),
-          stdio: "inherit",
-        });
+        const clientPath = path.join(targetPath, "client");
+        if (fs.existsSync(clientPath)) {
+          console.log(`\nInstalling client dependencies using ${pkgManager}...`);
+          await execa(pkgManager, ["install"], {
+            cwd: clientPath,
+            stdio: "inherit",
+          });
+        }
       } else {
         console.log("\nSkipping dependency installation (--no-install).");
         console.log(
-          `Please run \`${pkgManager} install\` manually in the root, server, and client directories.`,
+          `Please run \`${pkgManager} install\` manually in the necessary directories.`,
         );
       }
 
