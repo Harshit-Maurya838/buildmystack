@@ -1,5 +1,8 @@
 # buildmystack
 
+![npm version](https://img.shields.io/npm/v/buildmystack?color=blue&label=npm)
+![license](https://img.shields.io/npm/l/buildmystack)
+
 A zero-config CLI to generate production-ready full-stack apps with frontend, backend, auth, and database setup in seconds.
 
 ## 🌟 Features
