@@ -1,7 +1,12 @@
-# buildmystack
+<h1>
+	<img src="./img/buildmystack2.png" alt="buildmystack logo" width="60" height="60" style="vertical-align: middle;" />
+	buildmystack
+</h1>
 
 ![npm version](https://img.shields.io/npm/v/buildmystack?color=blue&label=npm)
 ![license](https://img.shields.io/npm/l/buildmystack)
+
+<img src="./img/Thumbnail.jpg"/>
 
 ## Why buildmystack?
 
